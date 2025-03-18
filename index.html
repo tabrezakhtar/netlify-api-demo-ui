@@ -16,7 +16,6 @@
   <table id="resultsTable" border="1" style="margin-top: 20px;">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Name</th>
         <th>Ingredients</th>
       </tr>
@@ -34,7 +33,6 @@
       data.forEach(recipe => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${recipe.id}</td>
           <td>${recipe.name}</td>
           <td>${recipe.ingredients.join(', ')}</td>
         `;
