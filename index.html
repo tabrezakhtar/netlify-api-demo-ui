@@ -69,9 +69,7 @@
       const buttons = document.querySelectorAll("button");
       buttons.forEach(btn => btn.disabled = true);
       fetchData(url).finally(() => {
-        setTimeout(() => {
-          buttons.forEach(btn => btn.disabled = false);
-        }, 1000);
+        buttons.forEach(btn => btn.disabled = false);
       });
     }
 
