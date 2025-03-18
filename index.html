@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Host an Express App on Netlify</title>
+</head>
+<body>
+  <h1>Recipes</h1>
+  <div style="display: flex; gap: 10px;">
+    <button onclick="fetchData('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes')">All Recipes</button>
+    <button onclick="fetchData('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=tomato')">Tomato Recipes</button>
+    <button onclick="fetchData('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=chicken')">Chicken Recipes</button>
+    <button onclick="fetchData('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=mushrooms')">Mushroom Recipes</button>
+  </div>
+  <table id="resultsTable" border="1" style="margin-top: 20px;">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Ingredients</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <script>
+    async function fetchData(url) {
+      const response = await fetch(url);
+      const data = await response.json();
+      const tableBody = document.querySelector('#resultsTable tbody');
+      tableBody.innerHTML = '';
+      data.forEach(recipe => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${recipe.id}</td>
+          <td>${recipe.name}</td>
+          <td>${recipe.ingredients.join(', ')}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+  </script>
+</body>
+</html>
