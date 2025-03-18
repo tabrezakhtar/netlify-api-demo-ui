@@ -33,10 +33,10 @@
 <body>
   <h1>Recipes</h1>
   <div style="display: flex; gap: 10px;">
-    <button onclick="handleButtonClick(this, 'https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes')">All Recipes</button>
-    <button onclick="handleButtonClick(this, 'https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=tomato')">Tomato Recipes</button>
-    <button onclick="handleButtonClick(this, 'https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=chicken')">Chicken Recipes</button>
-    <button onclick="handleButtonClick(this, 'https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=mushrooms')">Mushroom Recipes</button>
+    <button onclick="handleButtonClick('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes')">All Recipes</button>
+    <button onclick="handleButtonClick('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=tomato')">Tomato Recipes</button>
+    <button onclick="handleButtonClick('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=chicken')">Chicken Recipes</button>
+    <button onclick="handleButtonClick('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=mushrooms')">Mushroom Recipes</button>
   </div>
   <table id="resultsTable" border="1" style="margin-top: 20px;">
     <thead>
@@ -65,11 +65,12 @@
       });
     }
 
-    function handleButtonClick(button, url) {
-      button.disabled = true;
+    function handleButtonClick(url) {
+      const buttons = document.querySelectorAll("button");
+      buttons.forEach(btn => btn.disabled = true);
       fetchData(url).finally(() => {
         setTimeout(() => {
-          button.disabled = false;
+          buttons.forEach(btn => btn.disabled = false);
         }, 1000);
       });
     }
