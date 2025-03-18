@@ -10,33 +10,33 @@
       font-size: large;
     }
 
-		table {
-			border:2px solid #b3adad;
-			border-collapse:collapse;
-			padding:10px;
-		}
-		table th {
-			border:2px solid #b3adad;
-			padding:10px;
-			background: #f0f0f0;
-			color: #313030;
-		}
-		table td {
-			border:2px solid #b3adad;
-			text-align:center;
-			padding:10px;
-			background: #ffffff;
-			color: #313030;
-		}
-	</style>
+        table {
+            border:2px solid #b3adad;
+            border-collapse:collapse;
+            padding:10px;
+        }
+        table th {
+            border:2px solid #b3adad;
+            padding:10px;
+            background: #f0f0f0;
+            color: #313030;
+        }
+        table td {
+            border:2px solid #b3adad;
+            text-align:center;
+            padding:10px;
+            background: #ffffff;
+            color: #313030;
+        }
+    </style>
 </head>
 <body>
   <h1>Recipes</h1>
   <div style="display: flex; gap: 10px;">
-    <button onclick="fetchData('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes')">All Recipes</button>
-    <button onclick="fetchData('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=tomato')">Tomato Recipes</button>
-    <button onclick="fetchData('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=chicken')">Chicken Recipes</button>
-    <button onclick="fetchData('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=mushrooms')">Mushroom Recipes</button>
+    <button onclick="handleButtonClick(this, 'https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes')">All Recipes</button>
+    <button onclick="handleButtonClick(this, 'https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=tomato')">Tomato Recipes</button>
+    <button onclick="handleButtonClick(this, 'https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=chicken')">Chicken Recipes</button>
+    <button onclick="handleButtonClick(this, 'https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes/filter?ingredient=mushrooms')">Mushroom Recipes</button>
   </div>
   <table id="resultsTable" border="1" style="margin-top: 20px;">
     <thead>
@@ -53,19 +53,28 @@
     async function fetchData(url) {
       const response = await fetch(url);
       const data = await response.json();
-      const tableBody = document.querySelector('#resultsTable tbody');
-      tableBody.innerHTML = '';
+      const tableBody = document.querySelector("#resultsTable tbody");
+      tableBody.innerHTML = "";
       data.forEach(recipe => {
-        const row = document.createElement('tr');
+        const row = document.createElement("tr");
         row.innerHTML = `
           <td>${recipe.name}</td>
-          <td>${recipe.ingredients.join(', ')}</td>
+          <td>${recipe.ingredients.join(", ")}</td>
         `;
         tableBody.appendChild(row);
       });
     }
 
-    fetchData('https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes');
+    function handleButtonClick(button, url) {
+      button.disabled = true;
+      fetchData(url).finally(() => {
+        setTimeout(() => {
+          button.disabled = false;
+        }, 1000);
+      });
+    }
+
+    fetchData("https://remarkable-choux-9b8aab.netlify.app/.netlify/functions/server/recipes");
   </script>
 </body>
 </html>
